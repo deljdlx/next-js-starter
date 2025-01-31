@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "jsx": "preserve", // ou "react" si tu utilises React < 17
+
+    "strict": true,
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "incremental": true,
+    "esModuleInterop": true
+  },
+
+  "paths": {
+    "@prisma/client": ["node_modules/@prisma/client"]
+  },
+  "typeRoots": ["./node_modules/@types", "./node_modules/.prisma"],
+
+  "include": [
+    "src",
+    "src/types/next-auth.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

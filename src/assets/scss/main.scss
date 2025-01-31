@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+$headerHeight: 50px;
+
+$debugColor: #f0f;
+$defaultGutter: 10px;
+
+body {
+    background-color: #111E27;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    color: #aaa;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+
+
+
+    .App {
+        height: 100vh;
+        width: 100vw;
+        border: dashed 2px $debugColor;
+        position: relative;
+
+
+        .panel {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            margin: 10px;
+            border: dashed 1px $debugColor;
+            max-height: calc(100vh - #{$headerHeight});
+            overflow: auto;
+        }
+
+    }
+
+    .header {
+        height: $headerHeight;
+        width: 100%;
+        background-color: #333;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        padding: 0 #{$defaultGutter * 2};
+        gap: $defaultGutter;
+
+        .user_menu {
+            display: flex;
+            gap: $defaultGutter;
+            align-items: center;
+            justify-content: flex-end;
+            flex-grow: 1;
+        }
+    }
+}

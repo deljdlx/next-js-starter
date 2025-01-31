@@ -1,0 +1,21 @@
+-- CreateTable
+CREATE TABLE "Game" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "userId" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    CONSTRAINT "Game_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "GameTurn" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "gameId" TEXT NOT NULL,
+    "playerId" TEXT NOT NULL,
+    "turn" INTEGER NOT NULL,
+    "leftBound" INTEGER NOT NULL,
+    "rightBound" INTEGER NOT NULL,
+    "parent" TEXT,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "GameTurn_gameId_fkey" FOREIGN KEY ("gameId") REFERENCES "Game" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
