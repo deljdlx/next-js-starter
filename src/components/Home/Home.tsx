@@ -9,6 +9,9 @@ import { EditorDemo } from "../../components/EditorDemo/EditorDemo";
 import { PostForm } from "../../components/PostForm/PostForm";
 import { PostWithAuthor } from "../../types/post";
 
+import { Resources } from "../../components/Resources/Resources";
+import { Post } from "../../components/Post/Post";
+
 import { usePosts } from "../../hooks/usePosts";
 
 
@@ -51,6 +54,10 @@ export const Home:React.FC<HomeProps> = ({
     }, 300);
   };
 
+  const handleDeletePost = (id: string) => {
+    console.log('%cHome.tsx::57::', 'color: #f00; font-size: 1rem', id);
+  };
+
   return (
     <PanelGroup
       direction="horizontal"
@@ -71,6 +78,11 @@ export const Home:React.FC<HomeProps> = ({
             <h2>Monaco Editor Demo</h2>
             <EditorDemo />
           </div>
+
+          <div className="demo-block debug">
+            <h2>Resources</h2>
+            <Resources/>
+          </div>
         </div>
       </Panel>
       <PanelResizeHandle className="w-2 bg-blue-800"/>
@@ -87,11 +99,11 @@ export const Home:React.FC<HomeProps> = ({
           <div className="demo-block debug">
             <h1>Posts</h1>
             {internalPosts && internalPosts.map((post) => (
-              <div key={post.id} className="post debug">
-                  <h2>{post.title}</h2>
-                  <p>{post.content}</p>
-                  <small>By {post.author?.email}</small>
-              </div>
+              <Post
+                key={post.id}
+                post={post}
+                onDelete={handleDeletePost}
+              />
             ))}
           </div>
         </div>

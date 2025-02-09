@@ -32,6 +32,22 @@ body {
         color: #f0f;
     }
 
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    a {
+        color: #ff0;
+        text-decoration: underline;
+    }
+
+    td, th {
+        padding: 5px;
+        border: 1px solid #555;
+        text-align: left;
+    }
+
 
 
     .App {

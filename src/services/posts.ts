@@ -15,3 +15,15 @@ export const createPost = async ({ title, content }: { title: string; content: s
   if (!res.ok) throw new Error("Impossible de créer le post");
   return res.json();
 };
+
+
+export const deletePost = async (id: string) => {
+  const res = await fetch("/api/posts", {
+      method: "DELETE",
+      body: JSON.stringify({ id }),
+      headers: { "Content-Type": "application/json" },
+  });
+
+  if (!res.ok) throw new Error("Cannot delete post");
+  return res.json();
+};

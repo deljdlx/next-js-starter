@@ -9,6 +9,8 @@ const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
+  
+  console.log(req.method);
 
   if (req.method === "GET") {
     try {
@@ -24,38 +26,54 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
 
-    if (req.method === "POST") {
+  if (req.method === "POST") {
 
-      const { title, content, } = req.body;
-      if (!title || !content ) return res.status(400).json({
-        message: "Tous les champs sont requis : " +
-        "title: " + title +
-        ", content:" + content
-      });
+    const { title, content, } = req.body;
+    if (!title || !content ) return res.status(400).json({
+      message: "All fields are required: " +
+      "title: " + title +
+      ", content:" + content
+    });
 
 
-      const session = await getServerSession(req, res, authOptions);
-      console.log(session);
-      if (!session) return res.status(401).json({
-        message: "Not logged in"
-      });
+    const session = await getServerSession(req, res, authOptions);
+    console.log(session);
+    if (!session) return res.status(401).json({
+      message: "Not logged in"
+    });
 
-      if(!session.user.id) return res.status(403).json({
-        message: "Invalid user"
-      });
+    if(!session.user.id) return res.status(403).json({
+      message: "Invalid user"
+    });
 
-      const authorId = session.user.id;
+    const authorId = session.user.id;
 
-      try {
-          const post = await prisma.post.create({
-              data: { title, content, authorId },
-          });
+    try {
+        const post = await prisma.post.create({
+            data: { title, content, authorId },
+        });
 
-          return res.status(201).json(post);
-      } catch (error: any) {
-          return res.status(500).json({ message: "Post creation error : " + error.message });
-      }
+        return res.status(201).json(post);
+    } catch (error: any) {
+        return res.status(500).json({ message: "Post creation error : " + error.message });
+    }
+  }
+
+  if (req.method === "DELETE") {
+    const { id } = req.body;
+    if (typeof id !== "string") return res.status(400).json({ message: "Invalid post ID:" + id });
+
+    try {
+        await prisma.post.delete({ where: { id } });
+        return res.status(200).json({
+          message: "Post deleted",
+          id: id 
+        });
+    } catch (error: any) {
+        return res.status(500).json({ message: "Erreur lors de la suppression du post : " + error.message });
     }
 
-    return res.status(405).json({ message: "Méthode non autorisée" });
+  }
+
+  return res.status(405).json({ message: "Méthode non autorisée" });
 }

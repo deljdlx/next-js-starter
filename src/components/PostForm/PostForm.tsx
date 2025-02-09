@@ -21,7 +21,7 @@ export const PostForm: React.FC = () => {
     console.log('%cPostForm.tsx::16::', 'color: #f00; font-size: 1rem', session?.user?.id);
 
     if (!session?.user?.id) {
-      setMessage("Vous devez être connecté pour publier un post.");
+      setMessage("You must be logged in to create a post");
       return;
     }
 
