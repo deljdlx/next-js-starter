@@ -1,7 +1,10 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState } from "react";
+import Link from "next/link";
 
-export default function LoginPage() {
+import connectionSuccessImage from "../assets/images/connection-success.jpg";
+
+export default function SignInPage() {
     const { data: session } = useSession();
     const [form, setForm] = useState({ email: "", password: "" });
     const [message, setMessage] = useState("");
@@ -13,19 +16,31 @@ export default function LoginPage() {
             password: form.password,
             redirect: false,
         });
-        if (res?.error) setMessage("Email ou mot de passe incorrect.");
+        if (res?.error) setMessage("Invalid email or password");
     };
 
     return (
         <div>
             {session ? (
                 <>
-                    <p>Connecté en tant que {session.user?.email}</p>
-                    <button onClick={() => signOut()}>Se déconnecter</button>
+                    <div className="flex justify-center items-center h-screen">
+                        <div className="card bg-base-100 w-96 shadow-xl">
+                            <figure>
+                                <img src={connectionSuccessImage.src}/>
+                            </figure>
+                            <div className="card-body">
+                                <h2 className="card-title">You are connected</h2>
+                                <p>You are connected as {session.user?.email}</p>
+                                <div className="card-actions justify-end">
+                                    <Link href="/" className="btn btn-primary">Back to home</Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </>
             ) : (
                 <>
-                    <h1>Connexion</h1>
+                    <h1>Connection</h1>
                     <form onSubmit={handleSubmit}>
                         <input
                             type="email"
@@ -41,7 +56,7 @@ export default function LoginPage() {
                             onChange={(e) => setForm({ ...form, password: e.target.value })}
                             required
                         />
-                        <button type="submit">Se connecter</button>
+                        <button type="submit">Connect</button>
                     </form>
                     {message && <p>{message}</p>}
                 </>

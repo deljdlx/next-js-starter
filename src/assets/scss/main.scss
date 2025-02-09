@@ -5,7 +5,10 @@
 
 $headerHeight: 50px;
 
-$debugColor: #f0f;
+$debugColor-00: #f0f;
+$debugColor-01: #ff0;
+
+
 $defaultGutter: 10px;
 
 body {
@@ -19,25 +22,46 @@ body {
     width: 100vw;
     overflow: hidden;
 
+    h1 {
+        font-size: 2rem;
+        color: #fff;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        color: #f0f;
+    }
+
 
 
     .App {
         height: 100vh;
         width: 100vw;
-        border: dashed 2px $debugColor;
         position: relative;
 
+        &.debug {
+            border: dashed 1px $debugColor-00;
+            .debug {
+                border: dashed 1px $debugColor-01;
+            }
+        }
+
+        .demo-block {
+            margin-bottom: 10px;
+        }
 
         .panel {
             display: flex;
             flex-direction: column;
             padding: 10px;
             margin: 10px;
-            border: dashed 1px $debugColor;
             max-height: calc(100vh - #{$headerHeight});
             overflow: auto;
         }
 
+        .post {
+            margin-bottom: 10px;
+        }
     }
 
     .header {

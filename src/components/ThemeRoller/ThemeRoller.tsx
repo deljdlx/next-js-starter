@@ -1,17 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
-
+import { useApplicationContext } from "../../contexts/applicationContext";
 
 export const ThemeRoller: React.FC = () => {
 
-    const [theme, setTheme] = useState("demo-00");
+    const { theme, setTheme } = useApplicationContext();
+    const [localTheme, setLocalTheme] = useState(theme);
 
     const themes = [
         'demo-00', 'demo-01',
     ];
 
-    // 🔥 Charger dynamiquement le CSS des pièces
+
+    const handleThemeChange = (theme: string) => {
+        setLocalTheme(theme);
+        setTheme(theme);
+    };
+
     useEffect(() => {
-        const linkId = "chess-theme-style";
+        const linkId = "theme-style";
         let existingLink = document.getElementById(linkId) as HTMLLinkElement;
 
         if (!existingLink) {
@@ -21,8 +27,8 @@ export const ThemeRoller: React.FC = () => {
             document.head.appendChild(existingLink);
         }
 
-        existingLink.href = `/assets/themes/${theme}.css`;
-    }, [theme]);
+        existingLink.href = `/assets/themes/${localTheme}.css`;
+    }, [localTheme]);
 
 
     return (
@@ -32,8 +38,8 @@ export const ThemeRoller: React.FC = () => {
                 <select
                     className="select select-bordered w-full max-w-xs"
                     id="theme-select"
-                    value={theme}
-                    onChange={(e) => setTheme(e.target.value)}
+                    value={localTheme}
+                    onChange={(e) => handleThemeChange(e.target.value)}
                 >
                     {themes.map((t) => (
                         <option key={t} value={t}>

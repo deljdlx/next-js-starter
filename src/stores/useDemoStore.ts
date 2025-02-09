@@ -1,14 +1,14 @@
 import { create } from "zustand";
 
 interface DemoStoreInterface {
-    foo: string;
-    setFoo: (foo: string) => void;
+    debug: boolean;
+    setDebug: (debug: boolean) => void;
 }
 
-export const useTestStore = create<DemoStoreInterface>((set) => ({
-    foo: "bar",
-    setFoo: (foo) => {
-      console.log("🛑 setFoo called");
-      set({ foo });
+export const useDemoStore = create<DemoStoreInterface>((set) => ({
+    debug: true,
+    setDebug: (debug) => {
+      console.log("🛑 setDebug: " + debug);
+      set({ debug });
     },
 }));

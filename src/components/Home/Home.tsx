@@ -1,19 +1,13 @@
 import React from 'react';
-
-
 import { useEffect } from "react";
-import {  usePanelStore } from "../../stores/usePanelStore";
+import { usePanelStore } from "../../stores/usePanelStore";
+import { useSession } from "next-auth/react";
 
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { TabDemo } from "../../components/TabDemo/TabDemo";
 import { EditorDemo } from "../../components/EditorDemo/EditorDemo";
 import { PostForm } from "../../components/PostForm/PostForm";
-
-// import { Post } from "@prisma/client";
-
 import { PostWithAuthor } from "../../types/post";
-// import { Post, User } from "@prisma/client";
-
 
 import { usePosts } from "../../hooks/usePosts";
 
@@ -27,6 +21,7 @@ type HomeProps = {
 export const Home:React.FC<HomeProps> = ({
   posts = []
 }) => {
+  const { data: session } = useSession();
 
   const {
     leftPanelWidth,
@@ -66,13 +61,13 @@ export const Home:React.FC<HomeProps> = ({
       <Panel defaultSize={leftPanelWidth} className="panel panel_left">
 
         <div>
-          LEFT PANEL
-          <div>
+          <h1>LEFT PANEL</h1>
+          <div className="demo-block debug">
             <h2>MUI Tab Demo</h2>
             <TabDemo />
           </div>
 
-          <div>
+          <div className="demo-block debug">
             <h2>Monaco Editor Demo</h2>
             <EditorDemo />
           </div>
@@ -82,17 +77,20 @@ export const Home:React.FC<HomeProps> = ({
 
       <Panel defaultSize={rightPanelWidth}  className="panel panel_right">
         <div>
-          RIGHT PANEL
-          <div>
-            <PostForm/>
-          </div>
-          <div>
-            <h1>Liste des posts</h1>
+          <h1>RIGHT PANEL</h1>
+
+          {session && (
+            <div className="demo-block debug">
+              <PostForm/>
+            </div>
+          )}
+          <div className="demo-block debug">
+            <h1>Posts</h1>
             {internalPosts && internalPosts.map((post) => (
-              <div key={post.id} className="card">
+              <div key={post.id} className="post debug">
                   <h2>{post.title}</h2>
                   <p>{post.content}</p>
-                  <small>Publié par {post.author?.email}</small>
+                  <small>By {post.author?.email}</small>
               </div>
             ))}
           </div>

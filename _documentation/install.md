@@ -80,7 +80,7 @@ npx prisma migrate dev --name init
 npx prisma generate
 
 # update database schema
-prisma db push
+npx prisma db push
 
 # generate schema from existing database
 npx prisma db pull
